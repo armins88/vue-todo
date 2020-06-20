@@ -1,13 +1,16 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <h2> {{count}} </h2>
-
-
-
-    <button @click="increment"> + </button> 
-    <button @click="decrement"> - </button> 
-    
+    <h2> Create a task! </h2>
+    <input v-model="currentTask" type="text" /> 
+    <button @click="create({name: currentTask})"> Create new task -- {{currentTask}}</button>
+    <ul>
+      <li 
+        v-for="task in this.tasks"
+        :key="task"
+        @click="deleteTask({name: task})"
+        > {{task}} </li>
+    </ul>
   </div>
 </template>
 
@@ -16,15 +19,16 @@ import {mapState, mapMutations} from 'vuex'
 
 export default {
   name: 'HelloWorld',
+  data: () => {return {currentTask: "Current task"}},
   props: {
     msg: String
   },
   computed: mapState({
-    count: state =>  state.count,
+    tasks: state =>  state.tasks,
   }),
   methods: mapMutations([
-    'increment',
-    'decrement'
+    'deleteTask',
+    'create'
   ])  
 }
 </script>
@@ -35,11 +39,11 @@ h3 {
   margin: 40px 0 0;
 }
 ul {
-  list-style-type: none;
+  /* list-style-type: none; */
   padding: 0;
 }
 li {
-  display: inline-block;
+  /* display: inline-block; */
   margin: 0 10px;
 }
 a {

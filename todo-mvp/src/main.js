@@ -9,14 +9,21 @@ Vue.config.productionTip = false
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    count: 0,
+    tasks: [
+      "test"
+    ], //expecting array of String
   },
   mutations: {
-    increment: state => state.count++,
-    decrement: state => state.count--
+    deleteTask: (state, payload) => {
+      console.log(payload, state.tasks)
+      return state.tasks = state.tasks.filter(t => t != payload.name)
+    },
+    create: (state, payload) => state.tasks.push(payload.name)
   }
 })
 
 new Vue({
   render: h => h(App),
-  store}).$mount('#app')
+  store
+}).$mount('#app')
